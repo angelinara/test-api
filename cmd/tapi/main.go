@@ -14,20 +14,31 @@ func main() {
 
     switch os.Args[1] {
     case "init":
-        initCmd(os.Args[2:])
+        initCmd()
     case "new":
         newCmd(os.Args[2:])
     case "run":
         runCmd(os.Args[2:])
 	case "scan":
-        scanCmd(os.Args[2:])	
+        scanCmd()	
     default:
         fmt.Printf("unknown command: %s\n", os.Args[1])
         os.Exit(1)
     }
 }
 
-func initCmd(args []string) {
+func initCmd() {
+	path := ".test-api/requests"
+	if _, err := os.Stat(path); err == nil {
+        fmt.Println("already initialized")
+        return
+    }
+	err := os.MkdirAll(path, 0755)
+	if err != nil {
+        fmt.Println("failed to initialize:", err)
+        os.Exit(1)
+    }
+	fmt.Println("initialized test-api project in", path)
 
 }
 
@@ -39,7 +50,7 @@ func runCmd(args []string) {
 
 }
 
-func scanCmd(args []string) {
+func scanCmd() {
 
 
 }

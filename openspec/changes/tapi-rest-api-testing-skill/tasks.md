@@ -6,8 +6,8 @@
 
 ## 2. tapi init
 
-- [ ] 2.1 Implement `init` command: create `.test-api/requests/` in cwd
-- [ ] 2.2 Handle already-initialized case: check existence and print appropriate message
+- [x] 2.1 Implement `init` command: create `.test-api/requests/` in cwd
+- [x] 2.2 Handle already-initialized case: check existence and print appropriate message
 
 ## 3. internal/parser
 
