@@ -1,8 +1,8 @@
 ## 1. Project Scaffold
 
-- [ ] 1.1 Initialize Go module (`go mod init`) and add dependencies: cobra, huh (charmbracelet)
+- [x] 1.1 Initialize Go module (`go mod init`) and add dependency: huh (charmbracelet)
 - [ ] 1.2 Create directory structure: `cmd/tapi/`, `internal/parser/`, `internal/runner/`, `internal/formatter/`, `internal/picker/`, `internal/builder/`, `internal/scanner/`
-- [ ] 1.3 Wire up cobra root command in `cmd/tapi/main.go` with `init`, `new`, `run`, `scan` subcommands
+- [ ] 1.3 Implement subcommand routing in `cmd/tapi/main.go` via `switch os.Args[1]` for `init`, `new`, `run`, `scan`
 
 ## 2. tapi init
 

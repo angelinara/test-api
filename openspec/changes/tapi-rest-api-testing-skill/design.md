@@ -30,8 +30,8 @@ Request files are `.sh` scripts, not structured data. Rationale: they are runnab
 **Sentinel-based response splitting**
 `tapi run` appends `-w "\n__TAPI__%{http_code}|%{time_total}"` when executing curl and splits stdout on `__TAPI__`. This avoids a second HTTP call for metadata. Risk: if response body contains `__TAPI__` literally, splitting breaks — accepted as negligible in practice.
 
-**Go packages: cobra + huh**
-`cobra` for subcommand routing (standard, well-understood). `huh` (charmbracelet) for interactive prompts and arrow-key picker — single dependency covering both `tapi new` (form) and `tapi run` (select). Alternative: `bubbletea` directly is more flexible but more boilerplate.
+**Subcommand routing via os.Args, not cobra**
+With only 4 subcommands, a `switch os.Args[1]` in `main.go` is sufficient — no framework needed. `huh` (charmbracelet) is the single dependency, covering interactive prompts in `tapi new` and the arrow-key picker in `tapi run`. Dropping cobra removes a dependency with no loss of functionality at this scale.
 
 **`tapi scan` as JSON to stdout**
 Route detection output is JSON so the skill can parse it with `jq` or read it directly. No custom format to maintain. The skill calls `tapi scan` and receives a stable contract.
