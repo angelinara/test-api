@@ -1,7 +1,7 @@
 ## 1. Project Scaffold
 
 - [x] 1.1 Initialize Go module (`go mod init`) and add dependency: huh (charmbracelet)
-- [ ] 1.2 Create directory structure: `cmd/tapi/`, `internal/parser/`, `internal/runner/`, `internal/formatter/`, `internal/picker/`, `internal/builder/`, `internal/scanner/`
+- [x] 1.2 Create directory structure: `cmd/tapi/`, `internal/parser/`, `internal/runner/`, `internal/formatter/`, `internal/picker/`, `internal/builder/`, `internal/scanner/`
 - [ ] 1.3 Implement subcommand routing in `cmd/tapi/main.go` via `switch os.Args[1]` for `init`, `new`, `run`, `scan`
 
 ## 2. tapi init
