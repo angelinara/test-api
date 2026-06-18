@@ -33,11 +33,11 @@ Request files are `.sh` scripts, not structured data. Rationale: they are runnab
 **No external dependencies**
 With only 4 subcommands, a `switch os.Args[1]` in `main.go` is sufficient — no framework needed. `tapi new` is driven entirely by the `/test-api` skill, which handles the conversation and passes all values as flags (`--name`, `--description`, `--method`, `--url`, `--header`, `--body`). No interactive prompts needed in the CLI. `tapi run` without a name uses a simple numbered list printed to stdout, read from stdin — no TUI library required. Zero external dependencies.
 
-**`tapi scan` as JSON to stdout**
-Route detection output is JSON so the skill can parse it with `jq` or read it directly. No custom format to maintain. The skill calls `tapi scan` and receives a stable contract.
+**No scanner — skill reads source directly**
+Route detection is done by the skill (Claude) reading source files directly — no `tapi scan` command, no `internal/scanner` package. Claude is better at this than regex heuristics.
 
-**`internal/parser` parses curl flags, not the script**
-`tapi run` parses the curl invocation from the `.sh` file to reconstruct method/url/headers/body for the REQUEST display block. It then re-invokes curl (not the script) so it can append `-w`. Alternative (executing script then capturing) would require intercepting stdin/stdout of a subprocess that calls curl — harder to control.
+**`internal/parser` parses curl flags and description**
+`tapi run` prints the raw `.sh` file contents as the request display. The parser's job is to extract the description from line 2 for the picker, and to extract method/url/headers/body so the runner can re-invoke curl with the sentinel `-w` flag appended.
 
 ## Risks / Trade-offs
 

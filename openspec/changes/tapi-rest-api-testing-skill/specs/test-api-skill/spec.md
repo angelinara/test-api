@@ -1,15 +1,15 @@
 ## ADDED Requirements
 
-### Requirement: Invoke tapi scan and present endpoint list
-The `/test-api` skill SHALL run `tapi scan` and present a merged list of saved and unsaved endpoints for the user to choose from.
+### Requirement: Read codebase and present endpoint list
+The `/test-api` skill SHALL read the project source files directly to identify route definitions, cross-reference with `.test-api/requests/`, and present a merged list for the user to choose from.
 
 #### Scenario: Endpoints found
-- **WHEN** user invokes `/test-api` in a project with detectable routes
+- **WHEN** user invokes `/test-api` in a project with route definitions in source files
 - **THEN** skill displays a list showing saved status, method, path, and for saved entries the request name and description
 
 #### Scenario: No endpoints found
-- **WHEN** `tapi scan` returns an empty array
-- **THEN** skill informs the user no routes were detected and suggests checking framework support or running `tapi new` directly
+- **WHEN** skill finds no route definitions in the source files
+- **THEN** skill informs the user no routes were detected and suggests running `tapi new` directly
 
 ### Requirement: Run saved request
 When the user selects a saved endpoint, the skill SHALL execute `tapi run <name>`.
