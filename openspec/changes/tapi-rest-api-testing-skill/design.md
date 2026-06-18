@@ -30,8 +30,8 @@ Request files are `.sh` scripts, not structured data. Rationale: they are runnab
 **Sentinel-based response splitting**
 `tapi run` appends `-w "\n__TAPI__%{http_code}|%{time_total}"` when executing curl and splits stdout on `__TAPI__`. This avoids a second HTTP call for metadata. Risk: if response body contains `__TAPI__` literally, splitting breaks — accepted as negligible in practice.
 
-**Subcommand routing via os.Args, not cobra**
-With only 4 subcommands, a `switch os.Args[1]` in `main.go` is sufficient — no framework needed. `huh` (charmbracelet) is the single dependency, covering interactive prompts in `tapi new` and the arrow-key picker in `tapi run`. Dropping cobra removes a dependency with no loss of functionality at this scale.
+**No external dependencies**
+With only 4 subcommands, a `switch os.Args[1]` in `main.go` is sufficient — no framework needed. `tapi new` is driven entirely by the `/test-api` skill, which handles the conversation and passes all values as flags (`--name`, `--description`, `--method`, `--url`, `--header`, `--body`). No interactive prompts needed in the CLI. `tapi run` without a name uses a simple numbered list printed to stdout, read from stdin — no TUI library required. Zero external dependencies.
 
 **`tapi scan` as JSON to stdout**
 Route detection output is JSON so the skill can parse it with `jq` or read it directly. No custom format to maintain. The skill calls `tapi scan` and receives a stable contract.

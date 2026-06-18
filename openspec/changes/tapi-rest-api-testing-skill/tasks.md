@@ -1,6 +1,6 @@
 ## 1. Project Scaffold
 
-- [x] 1.1 Initialize Go module (`go mod init`) and add dependency: huh (charmbracelet)
+- [x] 1.1 Initialize Go module (`go mod init`) — no external dependencies required
 - [x] 1.2 Create directory structure: `cmd/tapi/`, `internal/parser/`, `internal/runner/`, `internal/formatter/`, `internal/picker/`, `internal/builder/`, `internal/scanner/`
 - [x] 1.3 Implement subcommand routing in `cmd/tapi/main.go` via `switch os.Args[1]` for `init`, `new`, `run`, `scan`
 
@@ -28,12 +28,11 @@
 
 ## 5. internal/builder (tapi new)
 
-- [ ] 5.1 Implement huh form for: name (if not pre-filled), description (required, ≤50 chars with validation), method (select), URL (text)
-- [ ] 5.2 Implement header collection loop: repeat `key: value` prompt until empty entry
-- [ ] 5.3 Implement body textarea (shown only for POST, PUT, PATCH)
-- [ ] 5.4 Implement script writer: generate `.sh` with shebang, description comment, canonical curl command, set permissions to 0755
-- [ ] 5.5 Handle name collision: prompt for overwrite confirmation if file exists
-- [ ] 5.6 Wire builder into `new` command
+- [x] 5.1 Parse flags from args: `--name`, `--description`, `--method`, `--url`, `--header` (repeatable), `--body`
+- [x] 5.2 Validate required fields: name, description (≤50 chars), method, url; exit with error if missing
+- [ ] 5.3 Implement script writer: generate `.sh` with shebang, description comment, canonical curl command, set permissions to 0755
+- [ ] 5.4 Handle name collision: exit with error if file already exists (skill handles overwrite logic)
+- [ ] 5.5 Wire builder into `new` command
 
 ## 6. internal/runner + internal/formatter (tapi run)
 
@@ -48,8 +47,8 @@
 ## 7. internal/picker (tapi run — no argument)
 
 - [ ] 7.1 Implement request lister: read `.test-api/requests/*.sh`, extract name + description via parser
-- [ ] 7.2 Implement huh select prompt showing `<name>  <description>` per entry
-- [ ] 7.3 Handle empty requests directory: print message suggesting `tapi new`
+- [ ] 7.2 Print numbered list of requests showing `<number>) <name>  <description>`, read selection from stdin
+- [ ] 7.3 Handle empty requests directory: print message suggesting `/test-api` skill
 - [ ] 7.4 Wire picker into `run` command when no name argument is provided
 
 ## 8. Claude Code Skill
