@@ -2,8 +2,13 @@ package builder
 
 import (
 	"testing"
+
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
+// pass strings into the function being tested, 
+// simulating command-line arguments a user would type
 func TestParseFlags_ValidGET(t *testing.T) {
 	r, err := ParseFlags([]string{
 		"--name", "get-users",
@@ -11,18 +16,12 @@ func TestParseFlags_ValidGET(t *testing.T) {
 		"--method", "GET",
 		"--url", "http://localhost:3000/users",
 	})
-	if err != nil {
-		t.Fatalf("unexpected error: %v", err)
-	}
-	if r.Name != "get-users" {
-		t.Errorf("expected name 'get-users', got '%s'", r.Name)
-	}
-	if r.Body != "" {
-		t.Errorf("expected empty body for GET, got '%s'", r.Body)
-	}
-	if len(r.Headers) != 0 {
-		t.Errorf("expected no headers, got %v", r.Headers)
-	}
+	require.NoError(t, err)
+	// check that the Name and Method fields on the returned struct were parsed correctly
+	assert.Equal(t, "get-users", r.Name)
+	assert.Equal(t, "GET", r.Method)
+	assert.Empty(t, r.Body)
+	assert.Empty(t, r.Headers)
 }
 
 func TestParseFlags_ValidPOSTWithHeadersAndBody(t *testing.T) {
@@ -35,15 +34,9 @@ func TestParseFlags_ValidPOSTWithHeadersAndBody(t *testing.T) {
 		"--header", "Authorization: Bearer abc123",
 		"--body", `{"email": "test@example.com", "password": "secret"}`,
 	})
-	if err != nil {
-		t.Fatalf("unexpected error: %v", err)
-	}
-	if len(r.Headers) != 2 {
-		t.Errorf("expected 2 headers, got %d", len(r.Headers))
-	}
-	if r.Body == "" {
-		t.Error("expected body to be set")
-	}
+	require.NoError(t, err)
+	assert.Len(t, r.Headers, 2)
+	assert.NotEmpty(t, r.Body)
 }
 
 func TestParseFlags_MissingName(t *testing.T) {
@@ -52,9 +45,7 @@ func TestParseFlags_MissingName(t *testing.T) {
 		"--method", "GET",
 		"--url", "http://localhost:3000/users",
 	})
-	if err == nil {
-		t.Error("expected error for missing --name")
-	}
+	assert.ErrorContains(t, err, "--name is required")
 }
 
 func TestParseFlags_MissingDescription(t *testing.T) {
@@ -63,9 +54,7 @@ func TestParseFlags_MissingDescription(t *testing.T) {
 		"--method", "GET",
 		"--url", "http://localhost:3000/users",
 	})
-	if err == nil {
-		t.Error("expected error for missing --description")
-	}
+	assert.ErrorContains(t, err, "--description is required")
 }
 
 func TestParseFlags_DescriptionTooLong(t *testing.T) {
@@ -75,9 +64,7 @@ func TestParseFlags_DescriptionTooLong(t *testing.T) {
 		"--method", "GET",
 		"--url", "http://localhost:3000/users",
 	})
-	if err == nil {
-		t.Error("expected error for description over 50 chars")
-	}
+	assert.ErrorContains(t, err, "--description must be 50 characters or fewer")
 }
 
 func TestParseFlags_MissingMethod(t *testing.T) {
@@ -86,9 +73,7 @@ func TestParseFlags_MissingMethod(t *testing.T) {
 		"--description", "Fetch all users",
 		"--url", "http://localhost:3000/users",
 	})
-	if err == nil {
-		t.Error("expected error for missing --method")
-	}
+	assert.ErrorContains(t, err, "--method is required")
 }
 
 func TestParseFlags_MissingURL(t *testing.T) {
@@ -97,7 +82,5 @@ func TestParseFlags_MissingURL(t *testing.T) {
 		"--description", "Fetch all users",
 		"--method", "GET",
 	})
-	if err == nil {
-		t.Error("expected error for missing --url")
-	}
+	assert.ErrorContains(t, err, "--url is required")
 }
