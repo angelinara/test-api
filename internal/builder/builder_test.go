@@ -7,7 +7,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-// pass strings into the function being tested, 
+// pass strings into the function being tested,
 // simulating command-line arguments a user would type
 func TestParseFlags_ValidGET(t *testing.T) {
 	r, err := ParseFlags([]string{
