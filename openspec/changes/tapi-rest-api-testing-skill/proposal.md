@@ -4,18 +4,17 @@ Testing REST API endpoints during development requires switching between tools, 
 
 ## What Changes
 
-- New Go CLI binary (`tapi`) with `init` and `run` commands
-- Requests persisted as self-contained bash scripts under `.test-api/requests/`
-- Claude Code skill (`/test-api`) that reads the codebase for route definitions, creates request files directly, and delegates execution to the CLI
-- Numbered picker and formatted request/response output with jq
+- New Go CLI binary (`tapi`) with `init` and `list` commands
+- Requests persisted as self-contained bash scripts under `.test-api/requests/`, with jq piped inline
+- Claude Code skill (`/test-api`) that reads codebase routes, creates request files directly, and runs them via bash
 
 ## Capabilities
 
 ### New Capabilities
 
 - `cli-init`: Initialize `.test-api/requests/` directory in any project
-- `cli-run`: Execute a saved request, display formatted request + response piped through jq
-- `test-api-skill`: Claude Code skill that reads source files for routes, creates request files directly, and delegates execution to `tapi run`
+- `cli-list`: List saved requests with name and description
+- `test-api-skill`: Claude Code skill that reads source files for routes, creates request files directly, and executes them via bash
 
 ### Modified Capabilities
 

@@ -5,11 +5,9 @@ No existing tooling in this repo. We are building `tapi` from scratch as a Go CL
 ## Goals / Non-Goals
 
 **Goals:**
-- Single binary (`tapi`) covering init, new, run, scan
-- Requests as self-contained bash scripts with embedded description comment
-- Formatted request + response output, body piped through `jq`
-- Arrow-key picker when `tapi run` is called with no argument
-- Claude Code skill that reads codebase routes and delegates to CLI
+- Single binary (`tapi`) covering `init` and `list`
+- Requests as self-contained bash scripts with embedded description comment and jq piped inline
+- Claude Code skill that reads codebase routes, creates request files, and runs them
 - Framework route detection: Gin, Express, FastAPI, Rails, Spring
 
 **Non-Goals:**
@@ -27,14 +25,14 @@ Request files are `.sh` scripts, not structured data. Rationale: they are runnab
 **Description as bash comment, not metadata block**
 `# Description here` on line 2 (after shebang) keeps the file valid bash with no special syntax. The skill enforces ≤50 chars when creating files. `tapi` reads it by scanning line 2. Alternative (YAML frontmatter) would break standalone execution.
 
-**Skill writes request files directly — no `tapi new`**
-The `/test-api` skill creates `.sh` files directly rather than delegating to a `tapi new` command. This removes a layer of indirection: the skill already has all the information needed (method, url, headers, body) from its conversation with the user, so writing the file directly is simpler. `tapi new` is not implemented.
+**Skill handles create and run — CLI handles init and list**
+`tapi new` and `tapi run` are not CLI commands. The skill writes `.sh` files directly and executes them via `bash`. The CLI's responsibility is limited to `init` (set up the directory) and `list` (enumerate saved requests with names and descriptions). This keeps the binary minimal and puts conversational logic where it belongs — in the skill.
 
-**Sentinel-based response splitting**
-`tapi run` appends `-w "\n__TAPI__%{http_code}|%{time_total}"` when executing curl and splits stdout on `__TAPI__`. This avoids a second HTTP call for metadata. Risk: if response body contains `__TAPI__` literally, splitting breaks — accepted as negligible in practice.
+**jq piped inline in the `.sh` file**
+Request scripts pipe curl output through `jq .` directly: `curl -s ... | jq .`. The skill writes this format. No sentinel or response-splitting logic needed in the CLI.
 
 **No external dependencies**
-With only 2 subcommands (`init`, `run`), a `switch os.Args[1]` in `main.go` is sufficient — no framework needed. `tapi run` without a name uses a simple numbered list printed to stdout, read from stdin — no TUI library required. Zero external dependencies.
+With only 2 subcommands (`init`, `list`), a `switch os.Args[1]` in `main.go` is sufficient. Zero external dependencies.
 
 **No scanner — skill reads source directly**
 Route detection is done by the skill (Claude) reading source files directly — no `tapi scan` command, no `internal/scanner` package. Claude is better at this than regex heuristics.
