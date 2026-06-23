@@ -9,7 +9,7 @@ The `/test-api` skill SHALL read the project source files directly to identify r
 
 #### Scenario: No endpoints found
 - **WHEN** skill finds no route definitions in the source files
-- **THEN** skill informs the user no routes were detected and suggests running `tapi new` directly
+- **THEN** skill informs the user no routes were detected and asks the user to describe the endpoint they want to test
 
 ### Requirement: Run saved request
 When the user selects a saved endpoint, the skill SHALL execute `tapi run <name>`.
@@ -19,11 +19,11 @@ When the user selects a saved endpoint, the skill SHALL execute `tapi run <name>
 - **THEN** skill runs `tapi run <name>` and displays the output
 
 ### Requirement: Create then run unsaved request
-When the user selects an unsaved endpoint, the skill SHALL invoke `tapi new` to create the request and then run it.
+When the user selects an unsaved endpoint, the skill SHALL gather request details conversationally, write the `.sh` file directly to `.test-api/requests/<name>.sh`, then run it.
 
 #### Scenario: User selects unsaved endpoint
 - **WHEN** user picks an endpoint not yet saved
-- **THEN** skill invokes `tapi new` with the endpoint name pre-suggested, waits for completion, then runs `tapi run <name>`
+- **THEN** skill asks for any missing details (headers, body), writes the `.sh` file with shebang on line 1, description comment on line 2, and canonical curl flags, sets permissions to 0755, then runs `tapi run <name>`
 
 ### Requirement: tapi CLI prerequisite check
 The skill SHALL verify that the `tapi` binary is available before proceeding.

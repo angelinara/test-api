@@ -19,9 +19,9 @@
 
 - [x] 4.1 Parse flags from args: `--name`, `--description`, `--method`, `--url`, `--header` (repeatable), `--body`
 - [x] 4.2 Validate required fields: name, description (≤50 chars), method, url; exit with error if missing
-- [ ] 4.3 Implement script writer: generate `.sh` with shebang, description comment, canonical curl command, set permissions to 0755
-- [ ] 4.4 Handle name collision: exit with error if file already exists (skill handles overwrite logic)
-- [ ] 4.5 Wire builder into `new` command
+- ~~4.3 Implement script writer~~ — removed; skill writes `.sh` files directly
+- ~~4.4 Handle name collision~~ — removed
+- ~~4.5 Wire builder into `new` command~~ — removed; `tapi new` not implemented
 
 ## 5. internal/runner + internal/formatter (tapi run)
 
@@ -48,7 +48,7 @@
 - [ ] 7.4 Skill reads `.test-api/requests/` to find already saved requests
 - [ ] 7.5 Skill presents merged endpoint list (saved/unsaved, method, path, name, description)
 - [ ] 7.6 Skill runs `tapi run <name>` for saved endpoint selections
-- [ ] 7.7 Skill invokes `tapi new ...` with all flags then `tapi run <name>` for unsaved endpoints
+- [ ] 7.7 Skill writes `.sh` file directly to `.test-api/requests/<name>.sh` then runs `tapi run <name>` for unsaved endpoints
 
 ## 8. README and Polish
 

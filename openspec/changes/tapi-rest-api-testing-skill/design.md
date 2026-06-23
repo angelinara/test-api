@@ -22,16 +22,19 @@ No existing tooling in this repo. We are building `tapi` from scratch as a Go CL
 ## Decisions
 
 **Bash scripts over YAML/JSON**
-Request files are `.sh` scripts, not structured data. Rationale: they are runnable standalone without `tapi`, diffable in git, and trivially copy-pasteable. The trade-off is that `tapi run` must parse curl flags at runtime — acceptable given the fixed shape `tapi new` generates.
+Request files are `.sh` scripts, not structured data. Rationale: they are runnable standalone without `tapi`, diffable in git, and trivially copy-pasteable. The trade-off is that `tapi run` must parse curl flags at runtime — acceptable given the fixed shape the skill generates.
 
 **Description as bash comment, not metadata block**
-`# Description here` on line 2 (after shebang) keeps the file valid bash with no special syntax. `tapi new` enforces ≤50 chars. `tapi` reads it by scanning line 2. Alternative (YAML frontmatter) would break standalone execution.
+`# Description here` on line 2 (after shebang) keeps the file valid bash with no special syntax. The skill enforces ≤50 chars when creating files. `tapi` reads it by scanning line 2. Alternative (YAML frontmatter) would break standalone execution.
+
+**Skill writes request files directly — no `tapi new`**
+The `/test-api` skill creates `.sh` files directly rather than delegating to a `tapi new` command. This removes a layer of indirection: the skill already has all the information needed (method, url, headers, body) from its conversation with the user, so writing the file directly is simpler. `tapi new` is not implemented.
 
 **Sentinel-based response splitting**
 `tapi run` appends `-w "\n__TAPI__%{http_code}|%{time_total}"` when executing curl and splits stdout on `__TAPI__`. This avoids a second HTTP call for metadata. Risk: if response body contains `__TAPI__` literally, splitting breaks — accepted as negligible in practice.
 
 **No external dependencies**
-With only 4 subcommands, a `switch os.Args[1]` in `main.go` is sufficient — no framework needed. `tapi new` is driven entirely by the `/test-api` skill, which handles the conversation and passes all values as flags (`--name`, `--description`, `--method`, `--url`, `--header`, `--body`). No interactive prompts needed in the CLI. `tapi run` without a name uses a simple numbered list printed to stdout, read from stdin — no TUI library required. Zero external dependencies.
+With only 2 subcommands (`init`, `run`), a `switch os.Args[1]` in `main.go` is sufficient — no framework needed. `tapi run` without a name uses a simple numbered list printed to stdout, read from stdin — no TUI library required. Zero external dependencies.
 
 **No scanner — skill reads source directly**
 Route detection is done by the skill (Claude) reading source files directly — no `tapi scan` command, no `internal/scanner` package. Claude is better at this than regex heuristics.
@@ -43,7 +46,7 @@ Route detection is done by the skill (Claude) reading source files directly — 
 
 `jq` not installed → `tapi run` fails silently or with confusing error. Mitigation: check for `jq` in PATH at startup and print a clear prerequisite message.
 
-Curl flag parsing is fragile if a user hand-edits the `.sh` file into non-standard forms. Mitigation: `tapi new` generates a canonical format; document that hand-edits should follow the same shape.
+Curl flag parsing is fragile if a user hand-edits the `.sh` file into non-standard forms. Mitigation: the skill generates a canonical format; document that hand-edits should follow the same shape.
 
 Route scanner regex is heuristic — will miss dynamic route registration and produce false positives on comments. Mitigation: output includes `file` and `line` so the user can verify. No auto-action is taken on scan results alone.
 
@@ -54,4 +57,3 @@ No existing state to migrate. Installation is `go install`. Per-project setup is
 ## Open Questions
 
 - Should `tapi run` fall back to executing the `.sh` script directly if curl flag parsing fails? (Currently: error out with a helpful message.)
-- Multi-line body input in `tapi new`: `huh` textarea or line-by-line prompts? (Leaning toward textarea.)
