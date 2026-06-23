@@ -68,7 +68,6 @@ func extractFields(tokens []string) *Request {
 			// if it starts with "http", it's the URL
 			if strings.HasPrefix(tokens[i], "http") {
 				r.URL = tokens[i]
-				i++
 			}
 		}
 	}

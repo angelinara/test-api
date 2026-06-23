@@ -11,9 +11,9 @@
 
 ## 3. internal/parser
 
-- [ ] 3.1 Implement curl flag parser: extract `-X METHOD`, URL, `-H` headers, `-d` body from a `.sh` file
+- [x] 3.1 Implement curl flag parser: extract `-X METHOD`, URL, `-H` headers, `-d` body from a `.sh` file
 - [x] 3.2 Read description from line 2 (first comment after shebang)
-- [ ] 3.3 Write unit tests covering GET (no body), POST with headers and body, multi-line body
+- [x] 3.3 Write unit tests covering GET (no body), POST with headers and body, multi-line body
 
 ## 4. internal/builder (tapi new)
 
