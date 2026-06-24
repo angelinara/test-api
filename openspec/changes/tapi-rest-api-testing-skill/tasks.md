@@ -17,10 +17,10 @@
 
 ## 4. tapi list
 
-- [ ] 4.1 Read `.test-api/requests/*.sh`, extract name (filename without extension) and description (line 2) via parser
-- [ ] 4.2 Print each request as `<name>  <description>`
-- [ ] 4.3 Handle empty requests directory: print message suggesting `/test-api` skill
-- [ ] 4.4 Wire list command into `main.go`
+- [x] 4.1 Read `.test-api/requests/*.sh`, extract name (filename without extension) and description (line 2) via parser
+- [x] 4.2 Print each request as `<name>  <description>`
+- [x] 4.3 Handle empty requests directory: print message suggesting `/test-api` skill
+- [x] 4.4 Wire list command into `main.go`
 
 ## 5. Claude Code Skill
 

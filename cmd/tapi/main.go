@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"github.com/angelinara/test-api/internal/builder"
+	"github.com/angelinara/test-api/internal/parser"
 )
 
 func main() {
@@ -21,6 +22,8 @@ func main() {
 		runCmd(os.Args[2:])
 	case "scan":
 		scanCmd()
+	case "list":
+		listCmd()
 	default:
 		fmt.Printf("unknown command: %s\n", os.Args[1])
 		os.Exit(1)
@@ -54,4 +57,19 @@ func runCmd(args []string) {
 }
 
 func scanCmd() {
+}
+
+func listCmd() {
+	items, err := parser.ListRequests(".test-api/requests")
+	if err != nil {
+		fmt.Println("failed to list requests:", err)
+		os.Exit(1)
+	}
+	if len(items) == 0 {
+		fmt.Println("no requests found — use the /test-api skill to create one")
+		return
+	}
+	for _, item := range items {
+		fmt.Printf("%-20s %s\n", item.Name, item.Description)
+	}
 }
