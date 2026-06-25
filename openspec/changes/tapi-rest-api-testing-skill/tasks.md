@@ -8,6 +8,10 @@
 
 - [x] 2.1 Implement `init` command: create `.test-api/requests/` in cwd
 - [x] 2.2 Handle already-initialized case: check existence and print appropriate message
+- [ ] 2.3 Embed skill files into binary using `//go:embed` (store under `internal/skills/`)
+- [ ] 2.4 Copy `tapi-new` and `tapi-list` skill files into `.claude/skills/` in cwd on `tapi init`
+- [ ] 2.5 Create `.claude/skills/` if it doesn't exist
+- [ ] 2.6 Skip copy if skill files already exist, print message
 
 ## 3. internal/parser
 
@@ -42,5 +46,5 @@
 
 ## 6. README and Polish
 
-- [ ] 6.1 Write `README.md`: prerequisites (Go, jq), install (`go install`), per-project setup (`tapi init`), usage (`tapi list`, `/test-api` skill)
-- [ ] 6.2 Smoke test: run `tapi init`, create a request via skill, `tapi list`, run via skill
+- [x] 6.1 Write `README.md`: prerequisites (Go, jq), install (`go install github.com/angelinara/test-api/cmd/tapi@latest` — repo is public), per-project setup (`tapi init`), usage (`tapi list`, `/tapi-new`, `/tapi-list`)
+- [x] 6.2 Smoke test: run `tapi init`, create a request via skill, `tapi list`, run via skill
