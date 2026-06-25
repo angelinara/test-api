@@ -30,8 +30,14 @@ func TestListFile(t *testing.T) {
 	require.NoError(t, err)
 
 	assert.ElementsMatch(t, []ListItem{
-		{Name: "create-user", Description: "Create a user"},
-		{Name: "get-users", Description: "Get all users"},
+		{Name: "create-user",
+			Description: "Create a user",
+			Method:      "POST",
+			URL:         "http://localhost/users"},
+		{Name: "get-users",
+			Description: "Get all users",
+			Method:      "GET",
+			URL:         "http://localhost/users"},
 	}, items)
 
 }

@@ -70,6 +70,6 @@ func listCmd() {
 		return
 	}
 	for _, item := range items {
-		fmt.Printf("%-20s %s\n", item.Name, item.Description)
+		fmt.Printf("%-20s %-6s %-40s %s\n", item.Name, item.Method, item.URL, item.Description)
 	}
 }

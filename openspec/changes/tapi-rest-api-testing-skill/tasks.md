@@ -21,9 +21,9 @@
 - [x] 4.2 Print each request as `<name>  <description>`
 - [x] 4.3 Handle empty requests directory: print message suggesting `/tapi-new` skill
 - [x] 4.4 Wire list command into `main.go`
-- [ ] 4.5 Extend `ListItem` to include `Method` and `URL` via `ParseFile`
-- [ ] 4.6 Update `tapi list` output to include method and URL: `<name>  <method>  <url>  <description>`
-- [ ] 4.7 Update tests for new output format
+- [x] 4.5 Extend `ListItem` to include `Method` and `URL` via `ParseFile`
+- [x] 4.6 Update `tapi list` output to include method and URL: `<name>  <method>  <url>  <description>`
+- [x] 4.7 Update tests for new output format
 
 ## 5. Claude Code Skills
 
