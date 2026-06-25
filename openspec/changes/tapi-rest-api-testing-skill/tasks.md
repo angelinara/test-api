@@ -28,11 +28,11 @@
 ## 5. Claude Code Skills
 
 ### /tapi-new
-- [ ] 5.1 Create `.claude/skills/tapi-new.md` skill file
-- [ ] 5.2 Skill reads codebase source files directly to identify routes (method + path)
-- [ ] 5.3 Skill runs `tapi list` to get saved requests (name, method, URL) and excludes matching routes
-- [ ] 5.4 Skill presents unsaved endpoints for selection
-- [ ] 5.5 Skill writes `.sh` file to `.test-api/requests/<name>.sh`
+- [x] 5.1 Create `.claude/skills/tapi-new.md` skill file
+- [x] 5.2 Skill reads codebase source files directly to identify routes (method + path)
+- [x] 5.3 Skill runs `tapi list` to get saved requests (name, method, URL) and excludes matching routes
+- [x] 5.4 Skill presents unsaved endpoints for selection
+- [x] 5.5 Skill writes `.sh` file to `.test-api/requests/<name>.sh`
 
 ### /tapi-list
 - [x] 5.6 Create `.claude/skills/tapi-list.md` skill file
