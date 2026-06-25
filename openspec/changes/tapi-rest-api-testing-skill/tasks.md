@@ -19,17 +19,26 @@
 
 - [x] 4.1 Read `.test-api/requests/*.sh`, extract name (filename without extension) and description (line 2) via parser
 - [x] 4.2 Print each request as `<name>  <description>`
-- [x] 4.3 Handle empty requests directory: print message suggesting `/test-api` skill
+- [x] 4.3 Handle empty requests directory: print message suggesting `/tapi-new` skill
 - [x] 4.4 Wire list command into `main.go`
+- [ ] 4.5 Extend `ListItem` to include `Method` and `URL` via `ParseFile`
+- [ ] 4.6 Update `tapi list` output to include method and URL: `<name>  <method>  <url>  <description>`
+- [ ] 4.7 Update tests for new output format
 
-## 5. Claude Code Skill
+## 5. Claude Code Skills
 
-- [ ] 5.1 Create `.claude/commands/test-api.md` skill file
+### /tapi-new
+- [ ] 5.1 Create `.claude/skills/tapi-new.md` skill file
 - [ ] 5.2 Skill reads codebase source files directly to identify routes (method + path)
-- [ ] 5.3 Skill reads `.test-api/requests/` to find already saved requests
-- [ ] 5.4 Skill presents merged endpoint list (saved/unsaved, method, path, name, description)
-- [ ] 5.5 Skill runs `bash .test-api/requests/<name>.sh` for saved endpoint selections and displays output
-- [ ] 5.6 Skill writes `.sh` file directly to `.test-api/requests/<name>.sh` then runs it for unsaved endpoints
+- [ ] 5.3 Skill runs `tapi list` to get saved requests (name, method, URL) and excludes matching routes
+- [ ] 5.4 Skill presents unsaved endpoints for selection
+- [ ] 5.5 Skill writes `.sh` file to `.test-api/requests/<name>.sh`
+
+### /tapi-list
+- [x] 5.6 Create `.claude/skills/tapi-list.md` skill file
+- [x] 5.7 Skill runs `tapi list` to show saved requests
+- [x] 5.8 Skill lets user pick a request and runs `bash .test-api/requests/<name>.sh`
+- [x] 5.9 Skill displays output
 
 ## 6. README and Polish
 
