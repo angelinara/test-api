@@ -1,0 +1,6 @@
+package main
+
+import "embed"
+
+//go:embed skills
+var skillsFS embed.FS

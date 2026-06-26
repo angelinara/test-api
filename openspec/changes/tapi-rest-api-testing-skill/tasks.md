@@ -8,10 +8,10 @@
 
 - [x] 2.1 Implement `init` command: create `.test-api/requests/` in cwd
 - [x] 2.2 Handle already-initialized case: check existence and print appropriate message
-- [ ] 2.3 Embed skill files into binary using `//go:embed` (store under `internal/skills/`)
-- [ ] 2.4 Copy `tapi-new` and `tapi-list` skill files into `.claude/skills/` in cwd on `tapi init`
-- [ ] 2.5 Create `.claude/skills/` if it doesn't exist
-- [ ] 2.6 Skip copy if skill files already exist, print message
+- [x] 2.3 Embed skill files into binary using `//go:embed` (store under `internal/skills/`)
+- [x] 2.4 Copy `tapi-new` and `tapi-list` skill files into `.claude/skills/` in cwd on `tapi init`
+- [x] 2.5 Create `.claude/skills/` if it doesn't exist
+- [x] 2.6 Skip copy if skill files already exist, print message
 
 ## 3. internal/parser
 
