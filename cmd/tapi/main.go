@@ -18,10 +18,6 @@ func main() {
 		initCmd()
 	case "new":
 		newCmd(os.Args[2:])
-	case "run":
-		runCmd(os.Args[2:])
-	case "scan":
-		scanCmd()
 	case "list":
 		listCmd()
 	default:
@@ -97,12 +93,6 @@ func newCmd(args []string) {
 		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
 	}
-}
-
-func runCmd(args []string) {
-}
-
-func scanCmd() {
 }
 
 func listCmd() {

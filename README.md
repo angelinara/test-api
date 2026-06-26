@@ -7,7 +7,7 @@ A CLI and Claude Code skill for testing REST APIs. Requests are saved as bash sc
 brew install go jq
 
 # install tapi
-go install github.com/angelinara/test-api/cmd/tapi@latest
+go install github.com/angelinara/test-api/cmd/tapi
 
 # set up tapi in your project (creates .test-api/requests/ and copies skills)
 tapi init
